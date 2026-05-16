@@ -1,0 +1,60 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java
+.mtj.tmp/
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.metadata/
+
+# Build folders
+bin/
+build/
+target/
+
+# Tomcat
+Servers/
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Generated servlet files
+work/
+
+# Temporary files
+temp/
+tmp/
+
+# Database files (if any local DB gets added later)
+*.db
+
+# Node modules (just in case frontend tooling added later)
+node_modules/

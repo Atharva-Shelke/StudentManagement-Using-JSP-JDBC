@@ -2,15 +2,11 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@page import="java.sql.*"%>
+<%@ page import="utility.SqlLoader" %>
+<%@ page import="utility.DBconnector" %>
 
 <%
-Class.forName("com.mysql.jdbc.Driver");
-
-Connection connection = DriverManager.getConnection(
-    "jdbc:mysql://localhost:3306/student_manager",
-    "root",
-    ""
-);
+Connection connection = DBconnector.getConnection();
 
 int id = Integer.parseInt(request.getParameter("id"));
 
@@ -20,11 +16,10 @@ if(request.getParameter("update") != null){
     String lastname = request.getParameter("lastname");
     int age = Integer.parseInt(request.getParameter("age"));
 
-    String updateSQL =
-        "UPDATE students SET firstname=?, lastname=?, age=? WHERE id=?";
+	String updateSql = SqlLoader.getQuery("update_student");
 
     PreparedStatement ps =
-        connection.prepareStatement(updateSQL);
+        connection.prepareStatement(updateSql);
 
     ps.setString(1, firstname);
     ps.setString(2, lastname);
@@ -36,8 +31,9 @@ if(request.getParameter("update") != null){
     response.sendRedirect("index.jsp?msg=updated");
 }
 
-PreparedStatement ps =
-    connection.prepareStatement("SELECT * FROM students WHERE id=?");
+String sql = SqlLoader.getQuery("find_student_by_id");
+
+PreparedStatement ps = connection.prepareStatement(sql);
 
 ps.setInt(1, id);
 

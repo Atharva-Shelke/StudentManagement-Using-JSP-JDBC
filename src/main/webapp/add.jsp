@@ -2,24 +2,19 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@page import="java.sql.*"%>
+<%@ page import="utility.SqlLoader" %>
+<%@ page import="utility.DBconnector" %>
 
 <%
 if(request.getParameter("submit") != null){
+
+	Connection connection = DBconnector.getConnection();
 
     String firstname = request.getParameter("firstname");
     String lastname = request.getParameter("lastname");
     int age = Integer.parseInt(request.getParameter("age"));
 
-    Class.forName("com.mysql.jdbc.Driver");
-
-    Connection connection = DriverManager.getConnection(
-        "jdbc:mysql://localhost:3306/student_manager",
-        "root",
-        ""
-    );
-
-    String sql =
-        "INSERT INTO students(firstname, lastname, age) VALUES (?, ?, ?)";
+	String sql = SqlLoader.getQuery("insert_student");
 
     PreparedStatement ps = connection.prepareStatement(sql);
 

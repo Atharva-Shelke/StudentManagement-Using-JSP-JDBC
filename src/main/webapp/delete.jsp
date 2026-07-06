@@ -1,20 +1,16 @@
 <%@page import="java.sql.*"%>
+<%@ page import="utility.SqlLoader" %>
+<%@ page import="utility.DBconnector" %>
 
 <%
+Connection connection = DBconnector.getConnection();
+
 int id = Integer.parseInt(request.getParameter("id"));
 
-Class.forName("com.mysql.jdbc.Driver");
 
-Connection connection = DriverManager.getConnection(
-    "jdbc:mysql://localhost:3306/student_manager",
-    "root",
-    ""
-);
+String sql = SqlLoader.getQuery("delete_student");
 
-PreparedStatement ps =
-    connection.prepareStatement(
-        "DELETE FROM students WHERE id=?"
-    );
+PreparedStatement ps = connection.prepareStatement(sql);
 
 ps.setInt(1, id);
 

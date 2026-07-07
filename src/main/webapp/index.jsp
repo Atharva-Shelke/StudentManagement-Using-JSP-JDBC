@@ -2,25 +2,17 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@page import="java.sql.*"%>
+<%@ page import="utility.SqlLoader" %>
+<%@ page import="utility.DBconnector" %>
 
 <%
-String driver = "com.mysql.jdbc.Driver";
-String connectionUrl = "jdbc:mysql://localhost:3306/";
-String database = "student_manager";
-String userid = "root";
-String password = "";
-
-Class.forName(driver);
-
-Connection connection = DriverManager.getConnection(
-    connectionUrl + database,
-    userid,
-    password
-);
+Connection connection = DBconnector.getConnection();
 
 Statement statement = connection.createStatement();
 
-ResultSet resultSet = statement.executeQuery("SELECT * FROM students");
+String sql = SqlLoader.getQuery("find_all_students");
+
+ResultSet resultSet = statement.executeQuery(sql);
 %>
 
 <%

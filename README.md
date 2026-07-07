@@ -6,8 +6,8 @@
 ![Database](https://img.shields.io/badge/Database-MySQL-blue)
 ![Server](https://img.shields.io/badge/Server-Apache%20Tomcat-yellow)
 
-A simple CRUD-based Student Management System developed using JSP, JDBC and MySQL.  
-This application allows users to add, view, update and delete student records through a clean and responsive web interface.
+A CRUD-based Student Management System developed using JSP, JDBC and MySQL.  
+The project demonstrates server-side rendering, database connectivity using JDBC, reusable database utilities, and externalized SQL query management for improved maintainability.
 
 ---
 
@@ -21,12 +21,17 @@ This application allows users to add, view, update and delete student records th
 - ✅ Success messages after CRUD operations
 - 🎨 Responsive and modern UI design
 - 🔐 Uses `PreparedStatement` for database operations
+- 📄 SQL queries externalized in `queries.sql`
+- ⚙️ Externalized database configuration using `database.properties`
+- ♻️ Reusable `DBconnector` and `SqlLoader` utility classes
 
 ---
 
 # 🛠️ Technologies Used
 
 - Java 8
+- Java Collections Framework
+- Java Properties API
 - JSP (Java Server Pages)
 - JDBC
 - MySQL
@@ -40,54 +45,87 @@ This application allows users to add, view, update and delete student records th
 
 ```bash
 StudentManagementSystem/
-│
-├── add.jsp
-├── edit.jsp
-├── delete.jsp
-├── index.jsp
-│
-├── WEB-INF/
-│   └── web.xml
-│
-└── lib/
-    └── mysql-connector-java-8.x.x.jar
+└── src/
+    └── main/
+        ├── java/
+        │   └── utility/
+        │       ├── ConfigUtil.java
+        │       ├── DBconnector.java
+        │       └── SqlLoader.java
+        │
+        ├── resources/
+        │   ├── config.properties
+        │   └── sql/
+        │       └── queries.sql
+        │
+        └── webapp/
+            ├── add.jsp
+            ├── edit.jsp
+            ├── delete.jsp
+            ├── index.jsp
+            │
+            └── WEB-INF/
+                ├── lib/
+                |    └── mysql-connector-java-8.x.x.jar
+                |
+                └── web.xml
 ```
 
 ---
 
 # 🗄️ Database Setup
 
-## Create Database
+Execute the SQL script located at:
 
-```sql
-CREATE DATABASE student_manager;
+```text
+src/main/resources/sql/queries.sql
 ```
 
-## Create Table
+The script contains:
 
-```sql
-USE student_manager;
+- Database creation
+- Table creation
+- CRUD SQL queries used by the application
 
-CREATE TABLE students (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(100),
-    lastname VARCHAR(100),
-    age INT
-);
+---
+
+# ⚙️ Configuration
+
+Update the configurations in `src/main/resources/config.properties` if required:
+
+```properties
+# Database configuration
+driver=com.mysql.jdbc.Driver
+connectionUrl=jdbc:mysql://localhost:3306/
+database=student_manager
+username=root
+password=
+
+# SQL file
+sql.file=sql/queries.sql
 ```
 
 ---
 
-# ⚙️ Configure Database Connection
+# 🏗️ Architecture
 
-Update database credentials in JSP files if needed:
-
-```java
-String connectionUrl = "jdbc:mysql://localhost:3306/";
-String database = "student_manager";
-String userid = "root";
-String password = "";
+```text
+  JSP Pages
+     │
+     ▼
+  Utility
+     │
+     ▼
+   JDBC
+     │
+     ▼
+MySQL Database
 ```
+
+- **ConfigUtil** – Loads application configuration from `config.properties`.
+- **DBconnector** – Creates reusable JDBC database connections.
+- **SqlLoader** – Loads named SQL queries from `queries.sql`.
+- **JSP pages** - Handles user interaction and renders responses.
 
 ---
 
@@ -142,4 +180,4 @@ http://localhost:8080/StudentManagementSystem/
 
 ## 📌 Note
 
-This project is intentionally implemented using **JSP, JDBC and MySQLi without frameworks** to demonstrate strong understanding of CRUD operations, SQL queries, and server-side scripting fundamentals.
+This project is intentionally implemented using **JSP, JDBC and MySQL** without frameworks to demonstrate server-side scripting, CRUD operations, reusable utility classes, externalized configuration, named SQL query management, and database connectivity fundamentals.
